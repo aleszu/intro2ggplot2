@@ -1,6 +1,6 @@
-# Wihbey intermediate R tutorial 
+# Intermediate R ggplot2 tutorial 
 
-# Load data from CSV, dplyr manipulation, and ggplot2 with scales 
+## Load data from CSV, dplyr manipulation, and ggplot2 with scales 
 
 library(dplyr)
 
