@@ -5,6 +5,9 @@
 # Exploring Facebook political ads 
 # Load data from CSV and ggplot2 with scales 
 
+library()
+library(dplyr)
+
 df <- read.csv("fbads_bcir.csv", header=TRUE, stringsAsFactors = FALSE) 
 glimpse(df)
 
@@ -16,6 +19,7 @@ summary(df) # check date min, max and other variables
 hist(df$date, breaks=50)
 hist(df$impressions, breaks=20)
 
+library(ggplot2)
 ggplot(df, aes(date)) + 
   geom_histogram(stat="count")
 
@@ -24,11 +28,10 @@ library(scales)
 ggplot(df, aes(date)) + 
   geom_histogram(stat="count") +
   scale_x_date(breaks = date_breaks("2 months"), labels = date_format("%b %Y")) +
-  ggtitle("Facebook ads collected by ProPublica on Beto O'Rourke")
+  ggtitle("Facebook ads collected by ProPublica")
 
 # Apply dplyr's filter with stringr
 
-library(dplyr)
 library(stringr)
 
 df_beto <- df %>%
@@ -38,7 +41,8 @@ glimpse(df)
 glimpse(df_beto)
 
 ggplot(df_beto, aes(date)) + 
-  geom_histogram(stat="count")
+  geom_histogram(stat="count") +
+  ggtitle("Facebook ads collected by ProPublica on Beto O'Rourke")
 
 
 
