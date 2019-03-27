@@ -1,6 +1,8 @@
+
 # Intermediate R tutorial 
 
 
+# Exploring Facebook political ads 
 # Load data from CSV and ggplot2 with scales 
 
 df <- read.csv("fbads_bcir.csv", header=TRUE, stringsAsFactors = FALSE) 
@@ -24,8 +26,6 @@ ggplot(df, aes(date)) +
   scale_x_date(breaks = date_breaks("2 months"), labels = date_format("%b %Y")) +
   ggtitle("Facebook ads collected by ProPublica on Beto O'Rourke")
 
-
-
 # Apply dplyr's filter with stringr
 
 library(dplyr)
@@ -34,12 +34,18 @@ library(stringr)
 df_beto <- df %>%
   filter(str_detect(message, "Beto"))
 
+glimpse(df)
+glimpse(df_beto)
+
 ggplot(df_beto, aes(date)) + 
   geom_histogram(stat="count")
 
 
 
-# Understanding stringr
+
+# ****Scatter plots!!!****
+
+# First, understanding stringr
 
 shortsentence <- "Hello world"
 shortsentence
@@ -50,20 +56,26 @@ mylongsentence
 str_length(shortsentence) # includes spaces
 str_length(mylongsentence)
 
-
-
-# Scatter plot  
 # Inspired by https://buzzfeednews.github.io/2018-01-trump-state-of-the-union/
 # Data from https://github.com/BuzzFeedNews/2018-01-trump-state-of-the-union
 
 sou <- read.csv("sou.csv", header=TRUE, stringsAsFactors = FALSE)
+glimpse(sou)
+
 presidents <- read.csv("presidents.csv", header=TRUE, stringsAsFactors = FALSE)
+glimpse(presidents)
 
 sou <- sou %>%
-  left_join(presidents)
+  left_join(presidents) # This will merge or "join" in the president's party
 
 glimpse(sou)
 
+# https://github.com/aleszu/intro2ggplot2/blob/master/dplyr-joins.png?raw=true
+# More resources on joins and binding rows or columns: 
+# https://rpubs.com/williamsurles/293454
+
+
+# ****MUTATE!****
 # Using mutate to create a new column based on a new function
 # First we'll fix the date
 
@@ -71,7 +83,8 @@ sou <- sou %>%
   mutate(year = as.Date(date)) 
 glimpse(sou)
 
-# Next we'll measure the length of each state of the union
+# Next we'll measure the length of each state of the union, 
+# loop through the whole "text" column and create the column with result
 
 sou <- sou %>%
   mutate(length = str_length(text))
