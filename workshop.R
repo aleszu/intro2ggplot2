@@ -5,7 +5,6 @@
 # Exploring Facebook political ads 
 # Load data from CSV and ggplot2 with scales 
 
-library()
 library(dplyr)
 
 df <- read.csv("fbads_bcir.csv", header=TRUE, stringsAsFactors = FALSE) 
