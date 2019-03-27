@@ -1,14 +1,13 @@
 # Intermediate R tutorial 
 
-# Load data from CSV, dplyr manipulation, and ggplot2 with scales 
 
-library(dplyr)
+# Load data from CSV and ggplot2 with scales 
 
 df <- read.csv("fbads_bcir.csv", header=TRUE, stringsAsFactors = FALSE) 
-df %>% glimpse()
+glimpse(df)
 
 df$date <- as.Date(df$date) # make R recognize date column 
-df %>% glimpse()
+glimpse(df)
 
 summary(df) # check date min, max and other variables
 
@@ -27,8 +26,9 @@ ggplot(df, aes(date)) +
 
 
 
-
 # Apply dplyr's filter with stringr
+
+library(dplyr)
 library(stringr)
 
 df_beto <- df %>%
@@ -36,6 +36,65 @@ df_beto <- df %>%
 
 ggplot(df_beto, aes(date)) + 
   geom_histogram(stat="count")
+
+
+
+# Understanding stringr
+
+shortsentence <- "Hello world"
+shortsentence
+
+mylongsentence <- "A pistol shot at five o'clock"
+mylongsentence
+
+str_length(shortsentence) # includes spaces
+str_length(mylongsentence)
+
+
+
+# Scatter plot  
+# Inspired by https://buzzfeednews.github.io/2018-01-trump-state-of-the-union/
+# Data from https://github.com/BuzzFeedNews/2018-01-trump-state-of-the-union
+
+sou <- read.csv("sou.csv", header=TRUE, stringsAsFactors = FALSE)
+presidents <- read.csv("presidents.csv", header=TRUE, stringsAsFactors = FALSE)
+
+sou <- sou %>%
+  left_join(presidents)
+
+glimpse(sou)
+
+# Using mutate to create a new column based on a new function
+# First we'll fix the date
+
+sou <- sou %>% 
+  mutate(year = as.Date(date)) 
+glimpse(sou)
+
+# Next we'll measure the length of each state of the union
+
+sou <- sou %>%
+  mutate(length = str_length(text))
+glimpse(sou)
+
+summary(sou$length)
+
+# Plot histogram
+ggplot(sou, aes(length)) + geom_histogram()
+
+# Plot box plot which has median, 1st and 3rd quartiles, min and max. 
+ggplot(sou, aes(party, length)) + geom_boxplot()
+
+# Plot scatterplot
+ggplot(sou, aes(year, length)) + geom_point() 
+
+# Improve scatterplot
+ggplot(sou, aes(year, length)) + 
+  geom_point(aes(color = party)) +
+  scale_x_date(breaks = date_breaks("30 years"), labels = date_format("%Y")) +
+  geom_smooth(method=loess) # this adds a "loess" local weighted regression line, a smooth curve for scatterplots
+  #+geom_smooth(method=lm)  # One can also do a linear regression to see that fit
+
 
 
 
@@ -61,32 +120,6 @@ ggplot(rollcalldf, aes(y=percent_of_vote, x=avgscore, color=party)) +
 
 
 
-
-
-# Scatter plot  
-# Inspired by https://buzzfeednews.github.io/2018-01-trump-state-of-the-union/
-# Data from https://github.com/BuzzFeedNews/2018-01-trump-state-of-the-union
-
-sou <- read.csv("sou.csv", header=TRUE, stringsAsFactors = FALSE)
-presidents <- read.csv("presidents.csv", header=TRUE, stringsAsFactors = FALSE)
-
-sou <- sou %>%
-  left_join(presidents)
-
-glimpse(sou)
-
-sou <- sou %>%
-  mutate(year = as.Date(date)) %>%
-  mutate(length = str_length(text))
-
-glimpse(sou)
-
-ggplot(sou, aes(year, length)) + geom_point() 
-
-ggplot(sou, aes(year, length)) + 
-  geom_point(aes(color = party)) +
-  scale_x_date(breaks = date_breaks("30 years"), labels = date_format("%Y")) +
-  geom_smooth()
 
 
 
