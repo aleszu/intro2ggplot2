@@ -12,10 +12,10 @@ Download [presidents.csv](https://raw.githubusercontent.com/aleszu/intro2ggplot2
 
 Download [final-df-roll-call.csv](https://raw.githubusercontent.com/aleszu/intro2ggplot2/master/final-df-roll-call.csv)
 
-[!image](https://github.com/aleszu/intro2ggplot2/blob/master/images/gg1.png)
+![img](https://github.com/aleszu/intro2ggplot2/blob/master/images/gg1.png)
 
-[!image](https://github.com/aleszu/intro2ggplot2/blob/master/images/gg5.png)
+![img](https://github.com/aleszu/intro2ggplot2/blob/master/images/gg5.png)
 
-[!image](https://github.com/aleszu/intro2ggplot2/blob/master/images/roll1.png)
+![img](https://github.com/aleszu/intro2ggplot2/blob/master/images/roll1.png)
 
-[!image](https://github.com/aleszu/intro2ggplot2/blob/master/images/roll2.png)
+![img](https://github.com/aleszu/intro2ggplot2/blob/master/images/roll2.png)
